@@ -6,6 +6,7 @@ use App\Http\Controllers\GameController;
 use App\Http\Controllers\DataTableController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\TournamentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -73,7 +74,17 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth'], 'as' => 'admin.'], 
     Route::post('game/store', [GameController::class, 'storegame'])->name('game.store');
     Route::get('game/edit/{id}', [GameController::class, 'editgame'])->name('game.edit'); 
     Route::put('game/update/{id}', [GameController::class, 'updategame'])->name('game.update');
-    Route::delete('game/delete/{id}', [GameController::class, 'deletegame'])->name('game.delete');    
+    Route::delete('game/delete/{id}', [GameController::class, 'deletegame'])->name('game.delete');   
+    
+
+    // tournamnent
+    Route::get('/tour', [TournamentController::class, 'indextour'])->name('tour.index');
+    Route::get('/tour/create', [TournamentController::class, 'createtour'])->name('tour.create');
+    Route::post('/tour/store', [TournamentController::class, 'storetour'])->name('tour.store');
+    Route::get('/tour/edit/{id}', [TournamentController::class, 'edittour'])->name('tour.edit');
+    Route::put('/tour/update/{id}', [TournamentController::class, 'updatetour'])->name('tour.update');
+    Route::delete('/tour/delete/{id}', [TournamentController::class, 'deletetour'])->name('tour.delete');
+
 
 
     Route::group(['prefix' => 'belajar'], function () {
