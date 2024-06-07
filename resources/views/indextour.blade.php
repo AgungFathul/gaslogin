@@ -51,6 +51,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Nama Turnamen</th>
+                                            <th>Game</th>
                                             <th>URL Turnamen</th>
                                             <th>Jadwal Mulai</th>
                                             <th>Jadwal Selesai</th>
@@ -63,6 +64,7 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $d->nama }}</td>
+                                                <td>{{ $d->game->judul }}</td>
                                                 <td>{{ $d->url }}</td>
                                                 <td>{{ $d->jadwal_mulai }}</td>
                                                 <td>{{ $d->jadwal_selesai }}</td>

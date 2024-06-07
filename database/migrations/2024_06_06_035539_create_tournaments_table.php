@@ -14,6 +14,8 @@ return new class extends Migration
         //membuat tabel tournaments otomatis
         Schema::create('tournaments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('game_id')->constrained('games')->onDelete('cascade');
             $table->string('nama');
             $table->string('url')->unique();
             $table->date('jadwal_mulai');
@@ -23,8 +25,6 @@ return new class extends Migration
             $table->string('alamat')->nullable();
             $table->text('hadiah')->nullable();
             $table->text('rules')->nullable();
-            // $table->foreignId('game_id')->constrained('games')->onDelete('cascade');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

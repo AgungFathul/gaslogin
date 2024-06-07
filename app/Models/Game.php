@@ -10,4 +10,11 @@ class Game extends Model
     use HasFactory;
 
     protected $fillable = ['judul', 'photo'];
+
+    // app/Models/Game.php
+    public function tournaments()
+    {
+        return $this->hasMany(Tournament::class);
+    }
+
 }
