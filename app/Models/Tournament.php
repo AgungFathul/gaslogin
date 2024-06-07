@@ -9,7 +9,15 @@ class Tournament extends Model
 {
      protected $table = 'tournaments';
     protected $fillable = [
-        'nama', 'url', 'jadwal_mulai', 'jadwal_selesai', 'deskripsi', 'tipe', 'alamat', 'hadiah', 'rules'
+        'nama',
+        'url',
+        'jadwal_mulai',
+        'jadwal_selesai',
+        'deskripsi',
+        'tipe',
+        'alamat',
+        'hadiah',
+        'rules'
     ];
     
     //Contoh relasi dengan User, jika ada

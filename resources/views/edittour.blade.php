@@ -1,104 +1,141 @@
 @extends('layout.main')
-
-@section('title', 'Edit Turnamen')
-
 @section('content')
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Edit Turnamen</div>
-
-                    <div class="card-body">
-                        <form action="{{ route('admin.tour.update', $tournament->id) }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            @method('PUT') 
-
-                            <div class="mb-3">
-                                <label for="nama" class="form-label">Nama Turnamen</label>
-                                <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" value="{{ old('nama', $tournament->nama) }}">
-                                @error('nama')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="url" class="form-label">URL Turnamen</label>
-                                <input type="text" class="form-control @error('url') is-invalid @enderror" id="url" name="url" value="{{ old('url', $tournament->url) }}">
-                                @error('url')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="jadwal_mulai" class="form-label">Jadwal Mulai</label>
-                                <input type="date" class="form-control @error('jadwal_mulai') is-invalid @enderror" id="jadwal_mulai" name="jadwal_mulai" value="{{ old('jadwal_mulai', $tournament->jadwal_mulai) }}">
-                                @error('jadwal_mulai')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="jadwal_selesai" class="form-label">Jadwal Selesai</label>
-                                <input type="date" class="form-control @error('jadwal_selesai') is-invalid @enderror" id="jadwal_selesai" name="jadwal_selesai" value="{{ old('jadwal_selesai', $tournament->jadwal_selesai) }}">
-                                @error('jadwal_selesai')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="deskripsi" class="form-label">Deskripsi</label>
-                                <textarea class="form-control @error('deskripsi') is-invalid @enderror" id="deskripsi" name="deskripsi">{{ old('deskripsi', $tournament->deskripsi) }}</textarea>
-                                @error('deskripsi')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="tipe" class="form-label">Tipe Turnamen</label>
-                                <select class="form-select @error('tipe') is-invalid @enderror" id="tipe" name="tipe">
-                                    <option value="Online" {{ old('tipe', $tournament->tipe) == 'Online' ? 'selected' : '' }}>Online</option>
-                                    <option value="Offline" {{ old('tipe', $tournament->tipe) == 'Offline' ? 'selected' : '' }}>Offline</option>
-                                </select>
-                                @error('tipe')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3" id="alamat-container" style="{{ old('tipe', $tournament->tipe) == 'Offline' ? '' : 'display:none;' }}">
-                                <label for="alamat" class="form-label">Alamat (jika Offline)</label>
-                                <input type="text" class="form-control @error('alamat') is-invalid @enderror" id="alamat" name="alamat" value="{{ old('alamat', $tournament->alamat) }}">
-                                @error('alamat')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="hadiah" class="form-label">Hadiah Pemenang</label>
-                                <textarea class="form-control @error('hadiah') is-invalid @enderror" id="hadiah" name="hadiah">{{ old('hadiah', $tournament->hadiah) }}</textarea>
-                                @error('hadiah')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="rules" class="form-label">Rules</label>
-                                <textarea class="form-control @error('rules') is-invalid @enderror" id="rules" name="rules">{{ old('rules', $tournament->rules) }}</textarea>
-                                @error('rules')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">Update Turnamen</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Tournament</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Edit Tournament</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
         </div>
-    </div>
+        <!-- /.content-header -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="col-12">
+                    <form action="{{ route('admin.tour.update', ['id' => $data->id]) }}" method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <div class="row">
+                            <!-- left column -->
+                            <div class="col-md-12">
+                                <!-- general form elements -->
+                                <div class="card card-primary">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Form Edit Turnamen</h3>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <!-- form start -->
+                                    <form>
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Nama Turnamen</label>
+                                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                                    value="{{ $data->nama }}"name="nama"
+                                                    placeholder="Masukan Nama Turnamen">
+                                                @error('nama')
+                                                    <small>{{ $message }}</small>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">URL Turnamen</label>
+                                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                                    value="{{ $data->url }}" name="url"
+                                                    placeholder="Masukan URL Turnamen">
+                                                @error('url')
+                                                    <small>{{ $message }}</small>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Jadwal Mulai</label>
+                                                <input type="date" class="form-control" id="exampleInputEmail1"
+                                                    value="{{ $data->jadwal_mulai }}" name="jadwal_mulai">
+                                                @error('jadwal_mulai')
+                                                    <small>{{ $message }}</small>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Jadwal Selesai</label>
+                                                <input type="date" class="form-control" id="exampleInputEmail1"
+                                                    value="{{ $data->jadwal_selesai }}" name="jadwal_selesai">
+                                                @error('jadwal_selesai')
+                                                    <small>{{ $message }}</small>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Deskripsi</label>
+                                                <textarea class="summernote" name="deskripsi">{{ $data->deskripsi }}</textarea>
+                                                @error('deskripsi')
+                                                    <small>{{ $message }}</small>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Tipe Turnamen</label>
+                                                <select class="form-select @error('tipe') is-invalid @enderror"
+                                                    id="tipe" name="tipe">
+                                                    <option value="Online" {{ old('tipe') == 'Online' ? 'selected' : '' }}>
+                                                        Online</option>
+                                                    <option value="Offline"
+                                                        {{ old('tipe') == 'Offline' ? 'selected' : '' }}>
+                                                        Offline</option>
+                                                </select>
+                                                @error('tipe')
+                                                    <small>{{ $message }}</small>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group" id="alamat-container"
+                                                style="{{ old('tipe') == 'Offline' ? '' : 'display:none;' }}">
+                                                <label for="exampleInputEmail1">Alamat (jika Offline)</label>
+                                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                                    name="alamat" value="{{ $data->alamat }}"
+                                                    placeholder="Masukan Alamat">
+                                                @error('nama')
+                                                    <small>{{ $message }}</small>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Hadiah Pemenang</label>
+                                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                                    name="hadiah" value="{{ $data->hadiah }}"
+                                                    placeholder="Masukan Hadiah Turnamen">
+                                                @error('hadiah')
+                                                    <small>{{ $message }}</small>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Rules</label>
+                                                <textarea class="summernote" name="rules">{{ $data->rules }}</textarea>
+                                                @error('rules')
+                                                    <small>{{ $message }}</small>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <!-- /.card-body -->
+                                        <div class="card-footer">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!--/.col (left) -->
+                        </div>
+                    </form>
+                    <!-- /.row -->
+                </div><!-- /.container-fluid -->
+        </section>
 
+    </div>
     <script>
-        // ... (JavaScript untuk menampilkan/menyembunyikan input alamat)
         const tipeSelect = document.getElementById('tipe');
         const alamatContainer = document.getElementById('alamat-container');
 
@@ -108,6 +145,10 @@
             } else {
                 alamatContainer.style.display = 'none';
             }
+        });
+
+        $(document).ready(function() {
+            $('.summernote').summernote();
         });
     </script>
 @endsection

@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('alamat')->nullable();
             $table->text('hadiah')->nullable();
             $table->text('rules')->nullable();
+            // $table->foreignId('game_id')->constrained('games')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

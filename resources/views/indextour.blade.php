@@ -1,58 +1,126 @@
 @extends('layout.main')
-
-@section('title', 'Daftar Turnamen')
-
 @section('content')
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
                     <div class="col-sm-6">
-                        Daftar Turnamen
-                    </div>
-                    <div class="col-sm-6 text-end">
-                        <a href="{{ route('admin.tour.create') }}" class="btn btn-primary">Tambah Turnamen</a>
-                    </div>
-                </div>
-
-                <div class="card-body">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama Turnamen</th>
-                                <th>URL Turnamen</th>
-                                <th>Jadwal Mulai</th>
-                                <th>Jadwal Selesai</th>
-                                <th>Tipe</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($tournaments as $tournament)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $tournament->nama }}</td>
-                                <td>{{ $tournament->url }}</td>
-                                <td>{{ $tournament->jadwal_mulai }}</td>
-                                <td>{{ $tournament->jadwal_selesai }}</td>
-                                <td>{{ $tournament->tipe }}</td>
-                                <td>
-                                    <a href="{{ route('admin.tour.edit', $tournament->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                                    <form action="{{ route('admin.tour.delete', $tournament->id) }}" method="POST" style="display: inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus turnamen ini?')">Hapus</button>
-                                    </form>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                        <h1 class="m-0">Tournament</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Tambah Turnamen</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
         </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <a href="{{ route('admin.tour.create') }}" class="btn btn-primary mb-3">Tambah Data</a>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Responsive Hover Table</h3>
+
+                                <div class="card-tools">
+                                    <form action="{{ route('admin.index') }}" method="GET">
+                                        <div class="input-group input-group-sm" style="width: 150px;">
+                                            <input type="text" name="search" class="form-control float-right"
+                                                placeholder="Search" value="{{ $request->get('search') }}">
+
+                                            <div class="input-group-append">
+                                                <button type="submit" class="btn btn-default">
+                                                    <i class="fas fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body table-responsive p-0">
+                                <table class="table table-hover text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Nama Turnamen</th>
+                                            <th>URL Turnamen</th>
+                                            <th>Jadwal Mulai</th>
+                                            <th>Jadwal Selesai</th>
+                                            <th>Tipe</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($data as $d)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $d->nama }}</td>
+                                                <td>{{ $d->url }}</td>
+                                                <td>{{ $d->jadwal_mulai }}</td>
+                                                <td>{{ $d->jadwal_selesai }}</td>
+                                                <td>{{ $d->tipe }}</td>
+                                                <td>
+                                                    {{-- <a href="{{ route('admin.berita.detail', ['id' => $d->id]) }}"
+                                                        class="btn btn-info"><i class="fas fa-eye"></i> Detail</a> --}}
+                                                    <a href="{{ route('admin.tour.edit', ['id' => $d->id]) }}"
+                                                        class="btn btn-primary"><i class="fas fa-pen"></i> Edit</a>
+                                                    <a data-toggle="modal" data-target="#modal-hapus{{ $d->id }}"
+                                                        class="btn btn-danger"><i class="fas fa-trash-alt"></i> Hapus</a>
+                                                </td>
+                                            </tr>
+                                            <div class="modal fade" id="modal-hapus{{ $d->id }}">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">Konfirmasi Hapus Data</h4>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Apakah kamu yakin ingin menghapus data user
+                                                                <b>{{ $d->name }}</b>
+                                                            </p>
+                                                        </div>
+                                                        <div class="modal-footer justify-content-between">
+                                                            <form
+                                                                action="{{ route('admin.tour.delete', ['id' => $d->id]) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="button" class="btn btn-default"
+                                                                    data-dismiss="modal">Close</button>
+                                                                <button type="submit" class="btn btn-primary">Ya,
+                                                                    Hapus</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.modal-content -->
+                                                </div>
+                                                <!-- /.modal-dialog -->
+                                            </div>
+                                            <!-- /.modal -->
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                </div>
+                <!-- /.row (main row) -->
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
     </div>
-</div>
 @endsection
