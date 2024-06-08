@@ -1,6 +1,3 @@
-## Repository khusus belajar laravel dari Blues Tutorial
-
-Tonton playlist belajarnya disini : https://www.youtube.com/playlist?list=PLRx0OlyTshRaeJxdgrbHDxQOe8z_Sixhd
 
 ## License
 
