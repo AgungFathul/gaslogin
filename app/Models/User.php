@@ -40,4 +40,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    // relasi dengan tabel turnamen
+        public function tournaments()
+    {
+        return $this->hasMany(Tournament::class);
+    }
+
+    public function tournament()
+{
+    return $this->belongsTo(Tournament::class);
+}
 }

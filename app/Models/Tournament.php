@@ -9,6 +9,8 @@ class Tournament extends Model
 {
      protected $table = 'tournaments';
     protected $fillable = [
+        'user_id',
+        'game_id',
         'nama',
         'url',
         'jadwal_mulai',
@@ -25,4 +27,16 @@ class Tournament extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function registrationSetting()
+    {
+        return $this->hasOne(RegistrationSetting::class);
+    }
+
+    // app/Models/Tournament.php
+    public function game()
+    {
+        return $this->belongsTo(Game::class);
+    }
+
 }
